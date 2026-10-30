@@ -238,6 +238,7 @@ html, body {
         #page {
           padding-top: $navbar-height;
           overflow: hidden;
+          overflow: clip;
           scroll-snap-align: start;
 
           &[type="full"] {

@@ -201,6 +201,7 @@ html #app #scroll #content, body #app #scroll #content {
 html #app #scroll #content #page, body #app #scroll #content #page {
   padding-top: 60px;
   overflow: hidden;
+  overflow: clip;
   scroll-snap-align: start;
 }
 html #app #scroll #content #page[type=full], body #app #scroll #content #page[type=full] {
