@@ -1,15 +1,15 @@
 import { Scene, Color, Euler, WebGLRenderer, OrthographicCamera, PCFShadowMap } from 'three';
 import SplineLoader from '@splinetool/loader';
+import projects from '/data/project.js';
 
 class Home {
   constructor() {
-    this.tags = [{
-      name: ['하랑', '워커홀릭', '달그락', '청포도', 'Upcycling It', 'Co-Study in Covid World', 'TTV'],
-    }, {
-      name: ['MOME MATE', '매일메일', '쉿', '욕설감지기', '글적글적', '블루펜슬', '너의 우산', 'My Little Farm'],
-    }, {
-      name: ['TTV', 'CHAIN POST', 'CANETIS', 'For Moon', 'Witch', 'Dr. Daily', '바람', '워커홀릭'],
-    }];
+    // 프로젝트 데이터에서 태그를 만든다. 최신 프로젝트가 앞에 오도록 세 줄에 번갈아 나눈다.
+    const names = [...new Set(Object.keys(projects).sort().reverse()
+      .flatMap((year) => Object.keys(projects[year]).map((name) => name.trim())))];
+    this.tags = [0, 1, 2].map((line) => ({
+      name: names.filter((_, index) => index % 3 === line),
+    }));
     [this.canvasWidth, this.canvasHeight] = [600, 600];
 
     this.init();
