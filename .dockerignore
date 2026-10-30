@@ -3,6 +3,8 @@
 .gitlab-ci.yml
 .dockerignore
 Dockerfile
+nginx
+serve.json
 original
 .idea
-.DS_Store
+**/.DS_Store

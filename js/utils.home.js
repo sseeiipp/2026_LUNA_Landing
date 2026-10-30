@@ -107,9 +107,16 @@ class Home {
     this.renderer.shadowMap.type = PCFShadowMap;
     this.renderer.setSize(this.canvasWidth, this.canvasHeight);
     this.renderer.setClearColor( 0x000000, 0 );
+    this.setPixelRatio();
     this.renderer.setAnimationLoop(() => {
       this.renderer.render(this.scene, this.camera);
     });
+  }
+
+  // 화면 배율(body scale)과 기기 픽셀 밀도에 맞춰 선명하게 그린다.
+  setPixelRatio = () => {
+    const scale = document.body.getBoundingClientRect().width / document.body.offsetWidth || 1;
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio * scale, 4));
   }
 
   initEventListener = () => {
@@ -117,5 +124,6 @@ class Home {
     $(document).on('mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave', this.onMove);
     $('#scroll').on('scroll', this.onMove);
     $(window).resize(this.setTags);
+    $(window).resize(this.setPixelRatio);
   }
 }; new Home();
