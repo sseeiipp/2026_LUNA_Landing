@@ -20,6 +20,7 @@ class Project {
       this.setProject(category);
     });
     $('#page.project #category #mix #item:first-child').trigger('click');
+    $('#page.main #number').text(new Date().getFullYear());
   }
 
   setProject = (category) => {
@@ -27,7 +28,6 @@ class Project {
     $(`#page.project #category #item[idx="${category}"]`).addClass('active');
     $('#page.project #title #number').text(category);
     $('#page.project #project').empty();
-    $('#page.main #number').text(category);
 
     for(const [name, data] of Object.entries(projects[category])) {
       $('#page.project #project').append(`

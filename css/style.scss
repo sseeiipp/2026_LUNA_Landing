@@ -753,9 +753,7 @@ html, body {
                 font-size: 16px;
                 line-height: 180%;
                 text-align: center;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
+                word-break: keep-all;
                 margin-top: 20px;
                 padding: 16px;
                 color: rgba($luna-dark, 0.5);
