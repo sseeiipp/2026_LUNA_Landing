@@ -3,5 +3,6 @@
 .gitlab-ci.yml
 .dockerignore
 Dockerfile
+nginx
 .idea
 .DS_Store
