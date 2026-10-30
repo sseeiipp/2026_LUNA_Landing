@@ -918,6 +918,7 @@ html, body {
               color: $luna-dark;
               flex: 1;
               overflow: hidden;
+              overflow: clip;
               border: solid 2px rgba($luna-dark, 0.1);
               border-radius: 20px;
               min-width: 250px;
@@ -942,6 +943,7 @@ html, body {
                 >* {
                   display: block;
                   overflow: hidden;
+                  overflow: clip;
                   text-overflow: ellipsis;
                   white-space: nowrap;
                 }
@@ -1117,6 +1119,7 @@ html, body {
               flex: 1;
               flex-direction: row;
               overflow: hidden;
+              overflow: clip;
               border: solid 2px rgba($luna-dark, 0.1);
               border-radius: 20px;
               min-width: 400px;
@@ -1246,6 +1249,7 @@ html, body {
               height: 0;
               padding: 0;
               overflow: hidden;
+              overflow: clip;
 
               #mix {
                 > * {

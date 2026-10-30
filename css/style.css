@@ -759,6 +759,7 @@ html #app.award #content #page.award #inner #award #item, body #app.award #conte
   color: #3A3A60;
   flex: 1;
   overflow: hidden;
+  overflow: clip;
   border: solid 2px rgba(58, 58, 96, 0.1);
   border-radius: 20px;
   min-width: 250px;
@@ -782,6 +783,7 @@ html #app.award #content #page.award #inner #award #item #text, body #app.award 
 html #app.award #content #page.award #inner #award #item #text > *, body #app.award #content #page.award #inner #award #item #text > * {
   display: block;
   overflow: hidden;
+  overflow: clip;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -927,6 +929,7 @@ html #app.project #content #page.project #inner #project #item, body #app.projec
   flex: 1;
   flex-direction: row;
   overflow: hidden;
+  overflow: clip;
   border: solid 2px rgba(58, 58, 96, 0.1);
   border-radius: 20px;
   min-width: 400px;
@@ -1028,6 +1031,7 @@ html #app.qna #content #page.qna #inner #item #a, body #app.qna #content #page.q
   height: 0;
   padding: 0;
   overflow: hidden;
+  overflow: clip;
 }
 html #app.qna #content #page.qna #inner #item #a #mix > *, body #app.qna #content #page.qna #inner #item #a #mix > * {
   line-height: 200%;
