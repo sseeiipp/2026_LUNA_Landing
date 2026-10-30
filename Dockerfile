@@ -4,3 +4,5 @@ ENV PORT=80
 COPY nginx/default.conf.template /etc/nginx/templates/default.conf.template
 COPY nginx/security-headers.conf /etc/nginx/security-headers.conf
 COPY . /usr/share/nginx/html
+# 서버 설정 파일은 위에서 복사했으니 웹 루트에서는 지운다.
+RUN rm -rf /usr/share/nginx/html/nginx

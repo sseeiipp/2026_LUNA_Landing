@@ -3,7 +3,6 @@
 .gitlab-ci.yml
 .dockerignore
 Dockerfile
-nginx
 serve.json
 original
 .idea
