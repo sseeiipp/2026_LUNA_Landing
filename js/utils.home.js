@@ -1,8 +1,18 @@
 import { loadProjects, countRows } from '/js/db.js';
 
 // 3D 라이브러리(three, Spline)는 크고 실행이 오래 걸려서(휴대폰에서 2초 가까이), 먼저 불러오면 글자와 화면이 그만큼 늦게 그려진다.
-// 화면이 한 번 그려진 다음에 동적 import로 불러온다.
-const afterFirstPaint = new Promise((resolve) => requestAnimationFrame(() => setTimeout(resolve)));
+// 글꼴이 준비되고 글자가 화면에 처음 그려진(first-contentful-paint) 다음에 동적 import로 불러온다.
+// 브라우저가 이 기록을 지원하지 않거나 늦어지면 3초 뒤에는 불러온다.
+const firstContentfulPaint = new Promise((resolve) => {
+  setTimeout(resolve, 3000);
+  try {
+    new PerformanceObserver((list, observer) => {
+      if(list.getEntriesByName('first-contentful-paint').length) { observer.disconnect(); resolve(); }
+    }).observe({ type: 'paint', buffered: true });
+  } catch { resolve(); }
+});
+const afterFirstPaint = Promise.all([firstContentfulPaint, document.fonts.ready])
+  .then(() => new Promise((resolve) => requestAnimationFrame(() => setTimeout(resolve))));
 const threeLoaded = afterFirstPaint.then(() => Promise.all([import('three'), import('@splinetool/loader')]));
 
 // 3D 모델이 DB 응답을 기다리지 않도록 데이터는 따로 받아 온다.
