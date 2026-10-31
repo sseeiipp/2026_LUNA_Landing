@@ -1,6 +1,8 @@
 import { loadProjects, imageUrl } from '/js/db.js';
 
 const projects = await loadProjects();
+// 아이콘이 없는 프로젝트는 루나 로고로 대신한다.
+const LOGO = '/logo/logo-512x512.png';
 
 class Project {
   constructor() {
@@ -34,7 +36,7 @@ class Project {
     for(const [name, data] of Object.entries(projects[category])) {
       $('#page.project #project').append(`
         <div id="item" idx="${name}">
-          <div id="image" style="background-image: url('${imageUrl(data.image)}');"></div>
+          <div id="image" style="background-image: url('${data.image ? imageUrl(data.image) : LOGO}');"></div>
           <div id=text>
             <div id="name">${name}</div>
             <div id="description">${data.description}</div>
@@ -43,6 +45,14 @@ class Project {
       `);
     }
     this.resizeItem();
+    // 사진 파일이 저장소에 없는 프로젝트도 루나 로고로 대신 보여 준다.
+    $('#page.project #project #item').each((_, item) => {
+      const data = projects[category][$(item).attr('idx')];
+      if(!data.image) return;
+      const image = new Image();
+      image.onerror = () => $(item).find('#image').css('background-image', `url('${LOGO}')`);
+      image.src = imageUrl(data.image);
+    });
   }
 
   resizeItem = () => {

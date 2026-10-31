@@ -1,17 +1,13 @@
 import { Scene, Color, Euler, WebGLRenderer, OrthographicCamera, PCFShadowMap } from 'three';
 import SplineLoader from '@splinetool/loader';
-import { loadProjects } from '/js/db.js';
+import { loadProjects, countRows } from '/js/db.js';
 
-const projects = await loadProjects();
+// 3D 모델이 DB 응답을 기다리지 않도록 데이터는 따로 받아 온다.
+const projectsLoaded = loadProjects();
 
 class Home {
   constructor() {
-    // 프로젝트 데이터에서 태그를 만든다. 최신 프로젝트가 앞에 오도록 세 줄에 번갈아 나눈다.
-    const names = [...new Set(Object.keys(projects).sort().reverse()
-      .flatMap((year) => Object.keys(projects[year]).map((name) => name.trim())))];
-    this.tags = [0, 1, 2].map((line) => ({
-      name: names.filter((_, index) => index % 3 === line),
-    }));
+    this.tags = [];
     [this.canvasWidth, this.canvasHeight] = [600, 600];
 
     this.init();
@@ -19,12 +15,23 @@ class Home {
 
   init = () => {
     this.initScrollMagic();
-    this.setTags();
     this.init3d();
     this.initEventListener();
+    projectsLoaded.then((projects) => {
+      // 프로젝트 데이터에서 태그를 만든다. 최신 프로젝트가 앞에 오도록 세 줄에 번갈아 나눈다.
+      const names = [...new Set(Object.keys(projects).sort().reverse()
+        .flatMap((year) => Object.keys(projects[year]).map((name) => name.trim())))];
+      this.tags = [0, 1, 2].map((line) => ({
+        name: names.filter((_, index) => index % 3 === line),
+      }));
+      this.setTags();
+      $('.count-projects').text(Object.values(projects).reduce((sum, year) => sum + Object.keys(year).length, 0));
+    });
+    countRows('awards').then((count) => $('.count-awards').text(count));
   }
 
   setTags = () => {
+    if(!this.tags.length) return;
     for(const [index, data] of this.tags.entries()) {
       const $target = $(`#page.project #tags #line[idx="${index}"] #mix`).empty();
       let count = 0;

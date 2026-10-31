@@ -1,3 +1,9 @@
+# 주소에 ?v=(배포 때 붙이는 내용 해시)가 있는 css/js는 1년 캐시하고, 나머지(HTML 등)는 매번 재검증한다.
+map $arg_v $asset_cache_control {
+    ""      "no-cache";
+    default "public, max-age=31536000, immutable";
+}
+
 server {
     listen ${PORT};
     server_name _;
@@ -30,10 +36,10 @@ server {
         try_files $uri =404;
     }
 
-    # HTML/CSS/JS/데이터는 배포 즉시 반영되도록 매번 재검증한다.
+    # HTML은 배포 즉시 반영되도록 매번 재검증한다. ?v=가 붙은 css/js만 오래 캐시한다.
     location / {
         include /etc/nginx/security-headers.conf;
-        add_header Cache-Control "no-cache";
+        add_header Cache-Control $asset_cache_control;
         # /award, /project 같은 확장자 없는 링크도 열리게 한다.
         try_files $uri $uri.html $uri/ =404;
     }

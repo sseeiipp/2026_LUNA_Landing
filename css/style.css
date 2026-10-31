@@ -232,7 +232,7 @@ html #app #navbar #inner #item #deactive, body #app #navbar #inner #item #deacti
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  opacity: 0.5;
+  opacity: 0.66;
 }
 html #app #navbar #inner #item.active #active, body #app #navbar #inner #item.active #active {
   opacity: 1 !important;
@@ -1113,7 +1113,7 @@ html #app.qna #content #page.main #inner #text #description, body #app.qna #cont
 html #app.qna #content #page.main #inner #text #description #bold, body #app.qna #content #page.main #inner #text #description #bold {
   font-weight: 700;
 }
-html #app.qna #content #page.main #inner iframe, body #app.qna #content #page.main #inner iframe {
+html #app.qna #content #page.main #inner iframe, html #app.qna #content #page.main #inner #video, body #app.qna #content #page.main #inner iframe, body #app.qna #content #page.main #inner #video {
   position: absolute;
   z-index: 0;
   width: 586px;
@@ -1121,6 +1121,26 @@ html #app.qna #content #page.main #inner iframe, body #app.qna #content #page.ma
   top: 50%;
   right: 5px;
   transform: translateY(-50%);
+}
+html #app.qna #content #page.main #inner #video, body #app.qna #content #page.main #inner #video {
+  padding: 0;
+  border: 0;
+  background: #000;
+  cursor: pointer;
+}
+html #app.qna #content #page.main #inner #video img, body #app.qna #content #page.main #inner #video img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+html #app.qna #content #page.main #inner #video svg, body #app.qna #content #page.main #inner #video svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 68px;
+  height: 48px;
+  transform: translate(-50%, -50%);
 }
 html #app.qna #content #page.qna #inner, body #app.qna #content #page.qna #inner {
   justify-content: flex-start !important;
@@ -1151,7 +1171,7 @@ html #app.qna #content #page.qna #inner #item #q, body #app.qna #content #page.q
   cursor: pointer;
 }
 html #app.qna #content #page.qna #inner #item #q #mix #text, body #app.qna #content #page.qna #inner #item #q #mix #text {
-  opacity: 0.6;
+  opacity: 0.72;
 }
 html #app.qna #content #page.qna #inner #item #a, body #app.qna #content #page.qna #inner #item #a {
   height: 0;

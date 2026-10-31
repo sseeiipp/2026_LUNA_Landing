@@ -10,7 +10,11 @@ const select = async (table, query) => {
   return res.json();
 };
 
-export const imageUrl = (path) => path && `${SUPABASE_URL}/storage/v1/object/public/images/${encodeURIComponent(path).replaceAll('%2F', '/')}`;
+// 화면에는 줄인 사진(images-resized)을 쓴다. 원본은 images 저장소에 같은 이름으로 있다.
+export const imageUrl = (path) => path && `${SUPABASE_URL}/storage/v1/object/public/images-resized/${encodeURIComponent(path).replaceAll('%2F', '/')}`;
+
+// 표의 행 수를 센다. (메인 페이지의 프로젝트·대회 수)
+export const countRows = async (table) => (await select(table, 'select=id')).length;
 
 // Notion 날짜("2018년 4월 1일 → 2018년 4월 2일")를 사이트 표기("2018년 04월 01일부터 이틀동안")로 바꾼다.
 const DAYS = ['하루', '이틀', '사흘', '나흘', '닷새', '엿새', '이레', '여드레', '아흐레', '열흘'];

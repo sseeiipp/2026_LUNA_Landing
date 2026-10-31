@@ -247,7 +247,7 @@ html, body {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            opacity: .5;
+            opacity: .66;
           }
 
           &.active {
@@ -1321,12 +1321,33 @@ html, body {
             }
           }
 
-          iframe {
+          iframe, #video {
             position: absolute;
             z-index: 0;
             width: 586px; height: 330px;
             top: 50%; right: 5px;
             transform: translateY(-50%);
+          }
+
+          // 영상은 썸네일을 먼저 보여 주고, 누르면 유튜브 플레이어로 바꾼다.
+          #video {
+            padding: 0;
+            border: 0;
+            background: #000;
+            cursor: pointer;
+
+            img {
+              display: block;
+              width: 100%; height: 100%;
+              object-fit: cover;
+            }
+
+            svg {
+              position: absolute;
+              top: 50%; left: 50%;
+              width: 68px; height: 48px;
+              transform: translate(-50%, -50%);
+            }
           }
         }
       }
@@ -1366,7 +1387,7 @@ html, body {
 
               #mix {
                 #text {
-                  opacity: .6;
+                  opacity: .72;
                 }
               }
             }
