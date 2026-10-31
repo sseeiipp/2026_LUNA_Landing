@@ -16,5 +16,7 @@ for item in *; do
 done
 find dist \( -name '.*' -o -name '*.scss' -o -name '*.map' \) -type f -exec rm -f {} +
 cp cloudflare/_headers dist/_headers
+# Cloudflare는 주소의 @를 %40으로 바꾸라고 307 리디렉트를 보낸다. 라이브러리마다 왕복이 한 번 더 생기지 않게 미리 %40으로 적는다.
+sed -i -E 's#/vendor/@splinetool/#/vendor/%40splinetool/#g; s#(/vendor/[^"'"'"' ]*)@#\1%40#g' dist/*.html
 sh nginx/version-assets.sh dist
 echo "dist 준비 완료: $(find dist -type f | wc -l)개 파일"

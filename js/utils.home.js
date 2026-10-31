@@ -1,6 +1,8 @@
-import { Scene, Color, Euler, WebGLRenderer, OrthographicCamera, PCFShadowMap } from 'three';
-import SplineLoader from '@splinetool/loader';
 import { loadProjects, countRows } from '/js/db.js';
+
+// 3D 라이브러리(three, Spline)는 크고 실행이 오래 걸려서, 정적 import로 두면 페이지 표시(DOMContentLoaded)가 늦어진다.
+// 바로 내려받기 시작하되 기다리지 않도록 동적 import로 불러온다.
+const threeLoaded = Promise.all([import('three'), import('@splinetool/loader')]);
 
 // 3D 모델이 DB 응답을 기다리지 않도록 데이터는 따로 받아 온다.
 const projectsLoaded = loadProjects();
@@ -52,7 +54,7 @@ class Home {
       this.eventX = e.clientX;
       this.eventY = e.clientY;
     }
-    if(this.eventX == undefined || this.eventY == undefined) return;
+    if(this.eventX == undefined || this.eventY == undefined || !this.renderer) return;
     const rect = this.renderer.domElement.getBoundingClientRect();
     const x = this.eventX - rect.left - this.canvasWidth / 2;
     const y = this.eventY - rect.top - this.canvasHeight / 2;
@@ -100,7 +102,8 @@ class Home {
     }), 0);
   }
 
-  init3d = () => {
+  init3d = async () => {
+    const [{ Scene, Color, Euler, WebGLRenderer, OrthographicCamera, PCFShadowMap }, { default: SplineLoader }] = await threeLoaded;
     this.camera = new OrthographicCamera(this.canvasWidth / - 2, this.canvasWidth / 2, this.canvasHeight / 2, this.canvasHeight / - 2,  -100000, 100000);
     this.camera.position.set(-53.17, -10.09, 572.1);
     this.camera.quaternion.setFromEuler(new Euler(0, 0, 0));
@@ -124,6 +127,7 @@ class Home {
 
   // 화면 배율(body scale)과 기기 픽셀 밀도에 맞춰 선명하게 그린다.
   setPixelRatio = () => {
+    if(!this.renderer) return;
     const scale = document.body.getBoundingClientRect().width / document.body.offsetWidth || 1;
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio * scale, 4));
   }
