@@ -38,7 +38,7 @@ class Home {
         name: names.filter((_, index) => index % 3 === line),
       }));
       this.setTags();
-      $('.count-projects').text(Object.values(projects).reduce((sum, year) => sum + Object.keys(year).length, 0));
+      // 프로젝트 수는 DB 목록(70개)에 빠진 프로젝트가 있어 HTML에 적은 숫자(72)를 그대로 쓴다.
     });
     countRows('awards').then((count) => $('.count-awards').text(count));
   }
