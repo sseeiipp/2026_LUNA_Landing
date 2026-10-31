@@ -1,0 +1,11 @@
+// Cloudflare Workers 배포 설정. 빌드 명령 `sh cloudflare/build.sh`가 만든 dist 폴더를 그대로 올린다.
+// 캐시·보안 헤더는 dist/_headers(cloudflare/_headers 복사본)가 붙인다.
+{
+  "name": "2026-luna-landing",
+  "compatibility_date": "2025-10-01",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none"
+  }
+}

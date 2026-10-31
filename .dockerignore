@@ -9,3 +9,4 @@ original
 **/.DS_Store
 dist
 cloudflare
+wrangler.jsonc

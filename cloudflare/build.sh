@@ -10,7 +10,7 @@ rm -rf dist
 mkdir dist
 for item in *; do
   case "$item" in
-    dist|original|nginx|cloudflare|Dockerfile|CNAME|serve.json) ;;
+    dist|original|nginx|cloudflare|Dockerfile|CNAME|serve.json|wrangler.jsonc) ;;
     *) cp -R "$item" dist/ ;;
   esac
 done
