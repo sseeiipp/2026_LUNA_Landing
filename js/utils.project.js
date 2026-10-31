@@ -1,7 +1,7 @@
 import { loadProjects, imageUrl } from '/js/db.js';
 
 const projects = await loadProjects();
-// 아이콘이 없는 프로젝트는 루나 로고로 대신한다.
+// 아이콘이 없는 프로젝트는 루나 로고로 대신한다. 로고는 다른 아이콘보다 커 보여서 칸의 45% 크기로 줄인다.
 const LOGO = '/logo/logo-512x512.png';
 
 class Project {
@@ -24,7 +24,8 @@ class Project {
       this.setProject(category);
     });
     $('#page.project #category #mix #item:first-child').trigger('click');
-    $('#page.main #number').text(new Date().getFullYear());
+    // 첫 화면 제목은 올해가 아니라 프로젝트가 있는 가장 최근 연도로 보여 준다.
+    $('#page.main #number').text(Object.keys(projects).sort().reverse()[0]);
   }
 
   setProject = (category) => {
@@ -36,7 +37,7 @@ class Project {
     for(const [name, data] of Object.entries(projects[category])) {
       $('#page.project #project').append(`
         <div id="item" idx="${name}">
-          <div id="image" style="background-image: url('${data.image ? imageUrl(data.image) : LOGO}');"></div>
+          <div id="image" style="${data.image ? `background-image: url('${imageUrl(data.image)}');` : `background-image: url('${LOGO}'); background-size: 45%;`}"></div>
           <div id=text>
             <div id="name">${name}</div>
             <div id="description">${data.description}</div>
