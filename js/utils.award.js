@@ -1,4 +1,6 @@
-import awards from '/data/award.js';
+import { loadAwards, imageUrl } from '/js/db.js';
+
+const awards = await loadAwards();
 
 class Award {
   constructor() {
@@ -31,7 +33,7 @@ class Award {
     for(const [name, data] of Object.entries(awards[category])) {
       $('#page.award #award').append(`
         <div id="item" idx="${name}">
-          <div id="image" style="background-image: url('/img/award/award/${data.image}');"></div>
+          <div id="image" style="background-image: url('${imageUrl(data.image)}');"></div>
           <div id=text>
             <div id="name">${name}</div>
             <div id="prize">${data.prize}</div>

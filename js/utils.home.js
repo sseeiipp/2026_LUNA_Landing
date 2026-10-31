@@ -1,6 +1,8 @@
 import { Scene, Color, Euler, WebGLRenderer, OrthographicCamera, PCFShadowMap } from 'three';
 import SplineLoader from '@splinetool/loader';
-import projects from '/data/project.js';
+import { loadProjects } from '/js/db.js';
+
+const projects = await loadProjects();
 
 class Home {
   constructor() {

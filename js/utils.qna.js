@@ -1,4 +1,6 @@
-import qnas from '/data/qna.js';
+import { loadQnas } from '/js/db.js';
+
+const qnas = await loadQnas();
 
 class Qna {
   constructor() {

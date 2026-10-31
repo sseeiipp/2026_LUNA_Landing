@@ -1,4 +1,6 @@
-import projects from '/data/project.js';
+import { loadProjects, imageUrl } from '/js/db.js';
+
+const projects = await loadProjects();
 
 class Project {
   constructor() {
@@ -32,7 +34,7 @@ class Project {
     for(const [name, data] of Object.entries(projects[category])) {
       $('#page.project #project').append(`
         <div id="item" idx="${name}">
-          <div id="image" style="background-image: url('/img/project/project/${data.image}');"></div>
+          <div id="image" style="background-image: url('${imageUrl(data.image)}');"></div>
           <div id=text>
             <div id="name">${name}</div>
             <div id="description">${data.description}</div>

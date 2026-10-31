@@ -1,4 +1,6 @@
-import members from '/data/members.js';
+import { loadMembers, imageUrl } from '/js/db.js';
+
+const members = await loadMembers();
 
 class Member {
   constructor() {
@@ -32,7 +34,7 @@ class Member {
       $('#page.member #member').append(`
         <div id="item" idx="${name}">
           <div id="position">${data.position}</div>
-          <div id="image" style="background-image: url(${data.image ? `/img/member/profile/user/${data.image}` : '/img/member/profile/default.svg'});"></div>
+          <div id="image" style="background-image: url(${data.image ? imageUrl(data.image) : '/img/member/profile/default.svg'});"></div>
           <div id="name">${name}</div>
           <div id="class">${data.class}</div>
           <div id="description">${data.description}</div>
