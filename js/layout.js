@@ -35,7 +35,11 @@ const resize = () => {
 }; resize();
 $(window).resize(resize).trigger('resize');
 $(document).ready(() => {
-  $('#scroll').addClass('loaded');
+  // 캐시된 페이지는 첫 화면을 그리기 전에 ready가 먼저 와서 페이드 인이 건너뛰어진다.
+  // 투명한 상태로 한 번 그린 다음에 loaded를 붙여서 매번 0.5초 페이드 인이 보이게 한다.
+  const scroll = document.getElementById('scroll');
+  if(scroll) getComputedStyle(scroll).opacity;
+  requestAnimationFrame(() => requestAnimationFrame(() => $('#scroll').addClass('loaded')));
   if(["member", "project"].includes(slug)) {
     $('#navbar').addClass('glass');
     $('#scroll').scroll(() => {
