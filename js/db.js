@@ -2,10 +2,10 @@
 const SUPABASE_URL = 'https://qmevafndcgcrzpjcitxc.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_LhfNrJMkafV31jTw_wC_Lg_koBWc_ya';
 
+// 키를 헤더 대신 주소에 넣으면 사전 확인(preflight) 요청이 없어지고, HTML의 <link rel="preload">가 미리 받아 둔 응답을 그대로 쓴다.
+// 주소(표 이름과 query 순서)를 바꾸면 각 HTML의 preload 주소도 같이 바꿔야 한다.
 const select = async (table, query) => {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${query}`, {
-    headers: { apikey: SUPABASE_KEY },
-  });
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${query}&apikey=${SUPABASE_KEY}`);
   if(!res.ok) throw new Error(`${table} 데이터를 불러오지 못했습니다 (${res.status})`);
   return res.json();
 };

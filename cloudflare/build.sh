@@ -18,5 +18,18 @@ find dist \( -name '.*' -o -name '*.scss' -o -name '*.map' \) -type f -exec rm -
 cp cloudflare/_headers dist/_headers
 # Cloudflare는 주소의 @를 %40으로 바꾸라고 307 리디렉트를 보낸다. 라이브러리마다 왕복이 한 번 더 생기지 않게 미리 %40으로 적는다.
 sed -i -E 's#/vendor/@splinetool/#/vendor/%40splinetool/#g; s#(/vendor/[^"'"'"' ]*)@#\1%40#g' dist/*.html
+# style.css를 각 HTML에 직접 넣어 렌더링을 막는 요청을 없앤다. 내용은 같고, 상대 주소(../)만 사이트 기준(/)으로 바꾼다.
+for page in dist/*.html; do
+  awk -v css=dist/css/style.css '
+    /<link rel="stylesheet" href="\.\/css\/style\.css">/ {
+      print "    <style>"
+      while ((getline line < css) > 0) { gsub(/url\(\x27\.\.\//, "url(\x27/", line); gsub(/url\("\.\.\//, "url(\"/", line); if (line !~ /^\/\*# sourceMappingURL/) print line }
+      close(css)
+      print "    </style>"
+      next
+    }
+    { print }
+  ' "$page" > "$page.tmp" && mv "$page.tmp" "$page"
+done
 sh nginx/version-assets.sh dist
 echo "dist 준비 완료: $(find dist -type f | wc -l)개 파일"
