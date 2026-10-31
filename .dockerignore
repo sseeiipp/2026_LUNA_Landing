@@ -7,3 +7,5 @@ serve.json
 original
 .idea
 **/.DS_Store
+dist
+cloudflare
