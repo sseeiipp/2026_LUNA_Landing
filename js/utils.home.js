@@ -11,7 +11,14 @@ const firstContentfulPaint = new Promise((resolve) => {
     }).observe({ type: 'paint', buffered: true });
   } catch { resolve(); }
 });
-const afterFirstPaint = Promise.all([firstContentfulPaint, document.fonts.ready])
+// 페이지가 나타나는 페이드인(#scroll, 0.5초)이 끝난 뒤에 불러와야 3D 실행 때문에 페이드인이 끊기지 않는다.
+const fadeInDone = new Promise((resolve) => {
+  setTimeout(resolve, 1500);
+  document.getElementById('scroll').addEventListener('transitionend', (e) => {
+    if(e.target.id === 'scroll' && e.propertyName === 'opacity') resolve();
+  });
+});
+const afterFirstPaint = Promise.all([firstContentfulPaint, document.fonts.ready, fadeInDone])
   .then(() => new Promise((resolve) => requestAnimationFrame(() => setTimeout(resolve))));
 const threeLoaded = afterFirstPaint.then(() => Promise.all([import('three'), import('@splinetool/loader')]));
 
